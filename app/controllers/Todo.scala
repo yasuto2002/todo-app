@@ -131,4 +131,20 @@ class TodoController @Inject()(messagesAction: MessagesActionBuilder, components
       }
     )
   }
+
+  def delete(todoId: Long) = messagesAction.async { implicit req =>
+    for{
+      todoCheck <- TodoRepository.get(tag[Todo][Long](todoId))
+      result <- todoCheck match {
+        case Some(todo) => {
+          TodoRepository.remove(todo.id).map(_.fold {
+            InternalServerError("Server Error")
+          } { _ => Redirect(routes.TodoController.index()) })
+        }
+        case _ => {
+          Future.successful(NotFound("Invalid value"))
+        }
+      }
+    }yield result
+  }
 }

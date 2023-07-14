@@ -19,7 +19,7 @@
                 <p class="list-todo_status">@todo._1.v.state.name</p>
                 <p class="list-todo_category">@todo._2.v.name</p>
                 <a href=@routes.TodoController.edit(todo._1.id) class="todoList-todo_edit todoList-todo_linker">編集</a>
-                <a href="/todo" class="todoList-todo_delete todoList-todo_linker">削除</a>
+                <a href=@routes.TodoController.delete(todo._1.id) class="todoList-todo_delete todoList-todo_linker">削除</a>
             </li>
         }
     </ul>

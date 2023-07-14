@@ -7,16 +7,18 @@
 GET     /                           controllers.HomeController.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file                   controllers.Assets.versioned(path="/public", file: Asset)
 
-GET     /todo                       controllers.TodoController.index
+GET     /todo                           controllers.TodoController.index
 
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file                   controllers.Assets.at(path="/public", file)
 
-POST    /insert/todo                 controllers.TodoController.store
+POST    /insert/todo                    controllers.TodoController.store
 
-GET    /todo/create                 controllers.TodoController.create
+GET     /todo/create                    controllers.TodoController.create
 
-GET   /todo/edit/:todoId            controllers.TodoController.edit(todoId : Long)
+GET     /todo/edit/:todoId              controllers.TodoController.edit(todoId : Long)
 
-POST   /todo/edit/:todoId            controllers.TodoController.update(todoId : Long)
+POST    /todo/edit/:todoId              controllers.TodoController.update(todoId : Long)
+
+GET     /todo/delete/:todoId            controllers.TodoController.delete(todoId : Long)
