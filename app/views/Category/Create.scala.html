@@ -1,0 +1,11 @@
+@(vv: model.ViewValueCategory)(categoryForm: Form[lib.model.Category.WithNoId])(implicit request: MessagesRequestHeader)
+@import helper._
+@common.Default(vv){
+    @form(action = routes.CategoryController.store,args = Symbol("class") -> "categoryFrom") {
+        @inputText(categoryForm("name"))
+        @textarea(field = categoryForm("slug"), args = Symbol("rows") -> 1, Symbol("cols") -> 65,Symbol("class") -> "todo_body")
+        @helper.inputRadioGroup(categoryForm("color"), options = lib.model.Category.Color.values.map(color => (color.code.toString,color.name)))
+        @CSRF.formField
+        <input type="submit"/>
+    }
+}

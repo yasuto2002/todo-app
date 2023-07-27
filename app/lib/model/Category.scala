@@ -40,6 +40,10 @@ object Category{
     )
   }
 
+  def unapply(category:Category#WithNoId):Option[(String,String,Color)] = {
+    Some((category.v.name,category.v.slug,category.v.color))
+  }
+
   def build(category: Category):Category#EmbeddedId ={
     new Entity.EmbeddedId(category)
   }

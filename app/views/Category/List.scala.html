@@ -1,0 +1,25 @@
+@(vv: model.ViewValueCategory)(categories:Seq[lib.model.Category.EmbeddedId])
+@common.Default(vv){
+
+    <div class="categoryList">
+        <div class="categoryList-header"><a href=@routes.CategoryController.create class="categoryList-header_make">category作成</a></div>
+        <ul class="list">
+            <li class="list-category list-headline">
+                <p class="list-category_name">名前</p>
+                <p class="list-category_slug">表示名</p>
+                <p class="list-category_color">カラー</p>
+                <p class="list-category_edit categoryList-category_linker">編集</p>
+                <p class="categoryList-category_delete categoryList-category_linker">削除</p>
+            </li>
+            @for(category  <- categories){
+                <li class="list-category list-headline">
+                    <p class="list-category_name">@category.v.name</p>
+                    <p class="list-category_slug">@category.v.slug</p>
+                    <p class="list-category_color">@category.v.color.name</p>
+                    <a href=@routes.CategoryController.edit(category.id) class="list-category_edit categoryList-category_linker">編集</a>
+                    <a href=@routes.CategoryController.delete(category.id) class="categoryList-category_delete categoryList-category_linker">削除</a>
+                </li>
+            }
+        </ul>
+    </div>
+}

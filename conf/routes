@@ -22,3 +22,15 @@ GET     /todo/edit/:todoId              controllers.TodoController.edit(todoId :
 POST    /todo/edit/:todoId              controllers.TodoController.update(todoId : Long)
 
 GET     /todo/delete/:todoId            controllers.TodoController.delete(todoId : Long)
+
+GET     /category                       controllers.CategoryController.index()
+
+GET     /category/create                controllers.CategoryController.create()
+
+POST     /category/create               controllers.CategoryController.store()
+
+GET     /category/edit/:categoryId      controllers.CategoryController.edit(categoryId:Long)
+
+POST     /category/edit/:categoryId     controllers.CategoryController.update(categoryId:Long)
+
+GET     /category/delete/:categoryId    controllers.CategoryController.delete(categoryId:Long)

@@ -5,7 +5,7 @@ import lib.model
 import lib.model.Category
 import lib.persistence.onMySQL.CategoryRepository.EntityEmbeddedId
 import slick.jdbc.JdbcProfile
-
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.Future
 case class CategoryRepository[P <: JdbcProfile]()(implicit val driver: P)
   extends SlickRepository[Category.Id, Category, P]
@@ -37,7 +37,7 @@ case class CategoryRepository[P <: JdbcProfile]()(implicit val driver: P)
       } yield old
     }
 
-  def remove(id: Id): Future[Option[EntityEmbeddedId]] = {
+  def remove(id: Id): Future[Option[EntityEmbeddedId]] =
     RunDBAction(CategoryTable) { slick =>
       val row = slick.filter(_.id === id)
       for {
@@ -48,15 +48,18 @@ case class CategoryRepository[P <: JdbcProfile]()(implicit val driver: P)
         }
       } yield old
     }
-  }
+
+  def cascadeDelete(id: Id): Future[Option[EntityEmbeddedId]] =
+      RunDBAction(TodoTable) { slick =>
+        val todos = slick.filter(_.category_id === id)
+        todos.delete
+      }.flatMap { _ =>
+        remove(id)
+      }
+
 
   def all(): Future[Seq[EntityEmbeddedId]] =
     RunDBAction(CategoryTable, "slave") { slick =>
       slick.result
     }
-
-  def requiredCheck(id:Category.Id): Future[Option[EntityEmbeddedId]] =
-    all().map(categories => categories.find((category: EntityEmbeddedId) => {
-      category.id.equals(id)
-  }))
 }
